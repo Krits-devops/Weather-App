@@ -22,7 +22,7 @@ function switchTab(newTab){
          if(!searchForm.classList.contains("active")){
             userInfo.classList.remove("active");
             grantAccessContainer.classList.remove("active");
-            searchForm.classList.contains("active");
+            searchForm.classList.add("active");
          }
          else{
             searchForm.classList.remove("active");
@@ -94,10 +94,10 @@ function renderWeatherInfo(weatherInfo){
     countryIcon.src = `https://flagcdn.com/144x108/${weatherInfo?.sys?.country.toLowerCase()}.png`;
     desc.innerText = weatherInfo?.weather?.[0]?.description;
     weatherIcon.src = `http://openweathermap.org/img/w/${weatherInfo?.weather?.[0]?.icon}.png`;
-    temp.innerText = weatherInfo?.main?.temp;
-    windspeed.innerText = weatherInfo?.wind?.speed;
-    humidity.innerText = weatherInfo?.main?.humidity;
-    cloudiness.innerText = weatherInfo?.clouds?.all;
+    temp.innerText = `${weatherInfo?.main?.temp} °C `;
+    windspeed.innerText = `${weatherInfo?.wind?.speed} m/s`;
+    humidity.innerText = `${weatherInfo?.main?.humidity}%`;
+    cloudiness.innerText = `${weatherInfo?.clouds?.all}%`;
 }
 
 function getLocation(){
@@ -138,7 +138,7 @@ searchForm.addEventListener("submit",(e)=>{
 
  async function fetchSearchWeatherInfo(city){
     loadingScreen.classList.add("active");
-    userContainer.classList.remove("active");
+    userInfo.classList.remove("active");
     grantAccessContainer.classList.remove("active");
 
     try{
@@ -146,7 +146,7 @@ searchForm.addEventListener("submit",(e)=>{
             &appid=${API_KEY}&units=metric`);
             const data = await response.json();
             loadingScreen.classList.remove("active");
-            userContainer.classList.add("active");
+            userInfo.classList.add("active");
 
             renderWeatherInfo(data);
 
